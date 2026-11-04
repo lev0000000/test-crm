@@ -196,3 +196,20 @@ code {
   padding-left: 12px;
   border-left: 3px solid #cbd5e1;
 }
+
+.task-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px;
+  font: inherit;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  resize: vertical;
+}

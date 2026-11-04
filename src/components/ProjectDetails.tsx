@@ -67,6 +67,7 @@ export function ProjectDetails({
                     setSelectedTaskId(null)
                     setReloadKey((key) => key + 1)
                 }}
+                profile={profile}
             />
         )
     }
