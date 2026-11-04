@@ -123,3 +123,50 @@ export async function createTask(input: TaskInput): Promise<void> {
 
   if (error) throw error
 }
+
+export async function updateTask(
+  taskId: string,
+  input: TaskInput,
+): Promise<void> {
+  const { error } = await supabase
+    .from('tasks')
+    .update({
+      title: input.title.trim(),
+      description: input.description.trim(),
+      project_id: input.project_id,
+      assignee_id: input.assignee_id,
+    })
+    .eq('id', taskId)
+    .select('id')
+    .single()
+
+  if (error) throw error
+}
+
+export async function deleteTask(taskId: string): Promise<void> {
+  const { data, error } = await supabase
+    .from('tasks')
+    .delete()
+    .eq('id', taskId)
+    .select('id')
+
+  if (error) throw error
+
+  if (!data?.length) {
+    throw new Error('Задача удалена или недоступна')
+  }
+}
+
+export async function getMyTasks(userId: string): Promise<Task[]> {
+  const { data, error } = await supabase
+    .from('tasks')
+    .select(
+      'id, title, description, project_id, assignee_id, status, author_id, created_at',
+    )
+    .eq('assignee_id', userId)
+    .order('created_at', { ascending: false })
+
+  if (error) throw error
+
+  return data ?? []
+}

@@ -4,6 +4,7 @@ import { useProfile } from '../service/useProfile'
 import { ProjectList } from './ProjectList'
 import { ProjectDetails } from './ProjectDetails'
 import type { Project } from '../service/projects.api'
+import { MyTasks } from './MyTasks'
 
 type WorkspaceProps = {
     userId: string
@@ -15,7 +16,9 @@ export function Workspace({ userId }: WorkspaceProps) {
     const [error, setError] = useState<string | null>(null)
     const [selectedProject, setSelectedProject] =
         useState<Project | null>(null)
-
+    const [view, setView] = useState<'projects' | 'my-tasks'>(
+        'projects',
+    )
     async function handleSignOut() {
         if (isSigningOut) return
 
@@ -69,7 +72,35 @@ export function Workspace({ userId }: WorkspaceProps) {
                             </p>
                         </section>
 
-                        {selectedProject ? (
+                        <nav className="workspace-nav" aria-label="Разделы CRM">
+                            <button
+                                type="button"
+                                aria-pressed={view === 'projects'}
+                                onClick={() => {
+                                    setSelectedProject(null)
+                                    setView('projects')
+                                }}
+                            >
+                                Объекты
+                            </button>
+
+                            {profile.role === 'executor' && (
+                                <button
+                                    type="button"
+                                    aria-pressed={view === 'my-tasks'}
+                                    onClick={() => {
+                                        setSelectedProject(null)
+                                        setView('my-tasks')
+                                    }}
+                                >
+                                    Мои задачи
+                                </button>
+                            )}
+                        </nav>
+
+                        {view === 'my-tasks' ? (
+                            <MyTasks profile={profile} />
+                        ) : selectedProject ? (
                             <ProjectDetails
                                 key={selectedProject.id}
                                 project={selectedProject}
@@ -81,7 +112,9 @@ export function Workspace({ userId }: WorkspaceProps) {
                             <ProjectList
                                 profile={profile}
                                 onSelectProject={setSelectedProject}
-                            />)}                    </>
+                            />
+                        )}
+                    </>
                 )
             }
         }

@@ -223,3 +223,15 @@ select {
   border: 1px solid #cbd5e1;
   border-radius: 6px;
 }
+
+.workspace-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.workspace-nav button[aria-pressed='false'] {
+  background: white;
+  color: #183b35;
+}

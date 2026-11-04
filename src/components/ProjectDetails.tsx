@@ -9,7 +9,6 @@ import { TaskDetails } from './TaskDetails'
 import type { Profile } from '../service/profile'
 import { ProjectActions } from './ProjectActions'
 import { TaskForm } from './TaskForm'
-
 type TasksState =
     | { status: 'loading' }
     | { status: 'ready'; tasks: Task[] }
@@ -114,7 +113,7 @@ export function ProjectDetails({
                         Новая задача
                     </button>
                 )
-            )}s
+            )}
 
             {state.status === 'loading' && (
                 <p role="status">Загружаем задачи…</p>

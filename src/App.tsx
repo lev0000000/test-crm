@@ -1,7 +1,6 @@
 import { Workspace } from './components/Workspace'
 import { LoginForm } from './components/auth/LoginForm'
 import { useAuth } from './service/useAuth'
-import { ProjectList } from './components/ProjectList'
 
 export default function App() {
   const auth = useAuth()

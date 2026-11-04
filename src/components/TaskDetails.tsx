@@ -9,6 +9,7 @@ import type { Task, TaskHistoryEntry } from '../service/tasks.api'
 import { TaskHistory } from './TaskHistory'
 import type { Profile } from '../service/profile'
 import { TaskActions } from './TaskActions'
+import { TaskManagement } from './TaskManagement'
 
 type TaskDetailsState =
     | { status: 'loading' }
@@ -123,6 +124,14 @@ export function TaskDetails({
                             {new Date(state.task.created_at).toLocaleString('ru-RU')}
                         </dd>
                     </dl>
+
+                    {profile.role === 'manager' && (
+                        <TaskManagement
+                            task={state.task}
+                            onUpdated={() => setReloadKey((key) => key + 1)}
+                            onDeleted={onBack}
+                        />
+                    )}
 
                     <TaskActions
                         key={`${state.task.id}:${state.task.status}`}
