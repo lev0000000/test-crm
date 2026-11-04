@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { supabase } from '../api/supabase'
 import { useProfile } from '../service/useProfile'
 import { ProjectList } from './ProjectList'
+import { ProjectDetails } from './ProjectDetails'
+import type { Project } from '../service/projects.api'
 
 type WorkspaceProps = {
     userId: string
@@ -11,6 +13,8 @@ export function Workspace({ userId }: WorkspaceProps) {
     const profileState = useProfile(userId)
     const [isSigningOut, setIsSigningOut] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const [selectedProject, setSelectedProject] =
+        useState<Project | null>(null)
 
     async function handleSignOut() {
         if (isSigningOut) return
@@ -65,8 +69,16 @@ export function Workspace({ userId }: WorkspaceProps) {
                             </p>
                         </section>
 
-                        <ProjectList />
-                    </>
+                        {selectedProject ? (
+                            <ProjectDetails
+                                key={selectedProject.id}
+                                project={selectedProject}
+                                profile={profile}
+                                onBack={() => setSelectedProject(null)}
+                            />
+                        ) : (
+                            <ProjectList onSelectProject={setSelectedProject} />
+                        )}                    </>
                 )
             }
         }

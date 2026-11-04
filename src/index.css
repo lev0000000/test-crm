@@ -131,3 +131,68 @@ code {
   margin: 0;
   color: #526070;
 }
+
+.task-list {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.task-card {
+  padding: 16px;
+  border: 1px solid #dce2e8;
+  border-radius: 8px;
+}
+
+.task-card h4 {
+  margin: 0 0 8px;
+}
+
+.task-card p {
+  margin: 0;
+}
+
+.project-card button {
+  margin-top: 16px;
+}
+
+.task-fields {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px 20px;
+  margin: 24px 0;
+}
+
+.task-fields dt {
+  color: #526070;
+}
+
+.task-fields dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.task-description,
+.history-list blockquote {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.task-card button {
+  margin-top: 12px;
+}
+
+.history-list {
+  padding-left: 20px;
+}
+
+.history-list li {
+  margin-bottom: 24px;
+}
+
+.history-list blockquote {
+  margin: 8px 0;
+  padding-left: 12px;
+  border-left: 3px solid #cbd5e1;
+}
