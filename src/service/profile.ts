@@ -19,3 +19,15 @@ export async function getProfile(
 
   return data
 }
+
+export async function getExecutors(): Promise<Profile[]> {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('id, display_name, role')
+    .eq('role', 'executor')
+    .order('display_name')
+
+  if (error) throw error
+
+  return data ?? []
+}

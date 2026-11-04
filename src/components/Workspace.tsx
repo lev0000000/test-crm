@@ -75,10 +75,13 @@ export function Workspace({ userId }: WorkspaceProps) {
                                 project={selectedProject}
                                 profile={profile}
                                 onBack={() => setSelectedProject(null)}
+                                onProjectUpdated={setSelectedProject}
                             />
                         ) : (
-                            <ProjectList onSelectProject={setSelectedProject} />
-                        )}                    </>
+                            <ProjectList
+                                profile={profile}
+                                onSelectProject={setSelectedProject}
+                            />)}                    </>
                 )
             }
         }

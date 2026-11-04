@@ -1,24 +1,28 @@
 import { useEffect, useState } from 'react'
 import { getProjects } from '../service/projects.api'
 import type { Project } from '../service/projects.api'
-
-type ProjectListProps = {
-    onSelectProject: (project: Project) => void
-}
+import type { Profile } from '../service/profile'
+import { ProjectForm } from './ProjectForm'
 
 type ProjectsState =
     | { status: 'loading' }
     | { status: 'ready'; projects: Project[] }
     | { status: 'error' }
 
+type ProjectListProps = {
+    profile: Profile
+    onSelectProject: (project: Project) => void
+}
+
 export function ProjectList({
+    profile,
     onSelectProject,
 }: ProjectListProps) {
     const [state, setState] = useState<ProjectsState>({
         status: 'loading',
     })
     const [reloadKey, setReloadKey] = useState(0)
-
+    const [showCreateForm, setShowCreateForm] = useState(false)
     useEffect(() => {
         let active = true
 
@@ -63,6 +67,25 @@ export function ProjectList({
     return (
         <section>
             <h2>Объекты</h2>
+
+            {profile.role === 'manager' && (
+                showCreateForm ? (
+                    <ProjectForm
+                        onCancel={() => setShowCreateForm(false)}
+                        onSaved={() => {
+                            setShowCreateForm(false)
+                            setReloadKey((key) => key + 1)
+                        }}
+                    />
+                ) : (
+                    <button
+                        type="button"
+                        onClick={() => setShowCreateForm(true)}
+                    >
+                        Новый объект
+                    </button>
+                )
+            )}
 
             {state.projects.length === 0 ? (
                 <p>Доступных объектов пока нет.</p>

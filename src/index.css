@@ -213,3 +213,13 @@ textarea {
   border-radius: 6px;
   resize: vertical;
 }
+
+select {
+  width: 100%;
+  padding: 12px;
+  font: inherit;
+  color: inherit;
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}

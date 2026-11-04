@@ -44,6 +44,13 @@ type TransitionTaskParams = {
   comment?: string
 }
 
+export type TaskInput = {
+  title: string
+  description: string
+  project_id: string
+  assignee_id: string
+}
+
 export async function getProjectTasks(
   projectId: string,
 ): Promise<Task[]> {
@@ -101,6 +108,17 @@ export async function transitionTask({
     p_expected: expectedStatus,
     p_target: targetStatus,
     p_comment: comment?.trim() || null,
+  })
+
+  if (error) throw error
+}
+
+export async function createTask(input: TaskInput): Promise<void> {
+  const { error } = await supabase.from('tasks').insert({
+    title: input.title.trim(),
+    description: input.description.trim(),
+    project_id: input.project_id,
+    assignee_id: input.assignee_id,
   })
 
   if (error) throw error

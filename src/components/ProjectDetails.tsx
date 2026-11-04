@@ -7,7 +7,8 @@ import {
 import type { Task } from '../service/tasks.api'
 import { TaskDetails } from './TaskDetails'
 import type { Profile } from '../service/profile'
-
+import { ProjectActions } from './ProjectActions'
+import { TaskForm } from './TaskForm'
 
 type TasksState =
     | { status: 'loading' }
@@ -16,15 +17,17 @@ type TasksState =
 
 
 type ProjectDetailsProps = {
-  project: Project
-  profile: Profile
-  onBack: () => void
+    project: Project
+    profile: Profile
+    onBack: () => void
+    onProjectUpdated: (project: Project) => void
 }
 
 export function ProjectDetails({
-  project,
-  profile,
-  onBack,
+    project,
+    profile,
+    onBack,
+    onProjectUpdated,
 }: ProjectDetailsProps) {
     const [state, setState] = useState<TasksState>({
         status: 'loading',
@@ -32,6 +35,8 @@ export function ProjectDetails({
     const [reloadKey, setReloadKey] = useState(0)
     const [selectedTaskId, setSelectedTaskId] =
         useState<string | null>(null)
+    const [showTaskForm, setShowTaskForm] = useState(false)
+
     useEffect(() => {
         let active = true
 
@@ -81,7 +86,35 @@ export function ProjectDetails({
             <h2>{project.name}</h2>
             <p>{project.address}</p>
 
+            {profile.role === 'manager' && (
+                <ProjectActions
+                    project={project}
+                    onUpdated={onProjectUpdated}
+                    onDeleted={onBack}
+                />
+            )}
+
             <h3>Задачи объекта</h3>
+
+            {profile.role === 'manager' && (
+                showTaskForm ? (
+                    <TaskForm
+                        projectId={project.id}
+                        onCancel={() => setShowTaskForm(false)}
+                        onSaved={() => {
+                            setShowTaskForm(false)
+                            setReloadKey((key) => key + 1)
+                        }}
+                    />
+                ) : (
+                    <button
+                        type="button"
+                        onClick={() => setShowTaskForm(true)}
+                    >
+                        Новая задача
+                    </button>
+                )
+            )}s
 
             {state.status === 'loading' && (
                 <p role="status">Загружаем задачи…</p>
