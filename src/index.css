@@ -109,3 +109,25 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+.project-list {
+  display: grid;
+  gap: 16px;
+  padding: 0;
+  list-style: none;
+}
+
+.project-card {
+  padding: 16px;
+  border: 1px solid #dce2e8;
+  border-radius: 8px;
+}
+
+.project-card h3 {
+  margin: 0 0 8px;
+}
+
+.project-card p {
+  margin: 0;
+  color: #526070;
+}

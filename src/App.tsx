@@ -1,6 +1,7 @@
 import { Workspace } from './components/Workspace'
 import { LoginForm } from './components/auth/LoginForm'
 import { useAuth } from './service/useAuth'
+import { ProjectList } from './components/ProjectList'
 
 export default function App() {
   const auth = useAuth()
@@ -27,7 +28,7 @@ export default function App() {
       return (
         <Workspace
           key={auth.session.user.id}
-          email={auth.session.user.email ?? ''}
+          userId={auth.session.user.id}
         />
       )
   }
